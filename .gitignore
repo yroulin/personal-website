@@ -41,6 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 #AGENTS
-agent-os
+/agent-os
 /docs
-AGENTS.md
+/AGENTS.md
