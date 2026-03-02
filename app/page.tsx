@@ -162,9 +162,9 @@ export default function Home() {
                   <Linkedin className="mr-2 h-4 w-4" /> {content.connect}
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 backdrop-blur-sm px-8">
+              {/* <Button variant="outline" size="lg" className="rounded-full border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 backdrop-blur-sm px-8">
                 <Mail className="mr-2 h-4 w-4" /> {content.contactBtn}
-              </Button>
+              </Button> */}
               {/* <LightningTip
                 address={content.lightningAddress}
                 title={content.tipTitle}
