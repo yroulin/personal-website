@@ -44,3 +44,11 @@ next-env.d.ts
 /agent-os
 /docs
 /AGENTS.md
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
