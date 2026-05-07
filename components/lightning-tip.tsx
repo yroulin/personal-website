@@ -35,13 +35,31 @@ export function LightningTip({ address, title, description }: LightningTipProps)
     const fetchInvoice = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`/api/lightning/invoice?address=${address}&amount=${amount}`);
-            const data = await res.json();
+            const [username, domain] = address.split("@");
+            const lnurlEndpoint = `https://${domain}/.well-known/lnurlp/${username}`;
+
+            const paramRes = await fetch(lnurlEndpoint);
+            if (!paramRes.ok) throw new Error("Failed to fetch LNURL params");
+            const params = await paramRes.json();
+
+            const { callback, minSendable, maxSendable } = params;
+            const amountMsats = parseInt(amount) * 1000;
+
+            if (amountMsats < minSendable || amountMsats > maxSendable) {
+                throw new Error("Amount out of range");
+            }
+
+            const callbackUrl = new URL(callback);
+            callbackUrl.searchParams.set("amount", amountMsats.toString());
+
+            const invoiceRes = await fetch(callbackUrl.toString());
+            if (!invoiceRes.ok) throw new Error("Failed to fetch invoice");
+            const data = await invoiceRes.json();
+
             if (data.pr) {
                 setInvoice(data.pr);
                 setStep("invoice");
 
-                // Try WebLN if available
                 if ((window as any).webln) {
                     try {
                         await (window as any).webln.enable();
