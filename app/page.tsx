@@ -286,7 +286,7 @@ export default function Home() {
           </section>
 
           {/* Testimonials */}
-          <section className="section" aria-labelledby="testimonials-heading">
+          {/* <section className="section" aria-labelledby="testimonials-heading">
             <RevealDiv>
               <p className="section-marker" aria-hidden="true">
                 05
@@ -296,7 +296,7 @@ export default function Home() {
               </h2>
             </RevealDiv>
             <ShuffleCards />
-          </section>
+          </section> */}
 
           {/* Contact */}
           <section className="section" aria-labelledby="contact-heading">

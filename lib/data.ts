@@ -86,6 +86,12 @@ export const contentData: Record<"en" | "es", Content> = {
             { name: "GraphQL", category: "API" },
             { name: "Git", category: "Tools" },
             { name: "Docker", category: "Infrastructure" },
+            { name: "LXC", category: "Infrastructure" },
+            { name: "Virtual Machines", category: "Infrastructure" },
+            { name: "Supabase", category: "Backend" },
+            { name: "n8n", category: "Automation" },
+            { name: "Claude Code", category: "AI Tools" },
+            { name: "Agentic Development", category: "AI Tools" },
         ],
         projectsList: [
             {
@@ -103,11 +109,18 @@ export const contentData: Record<"en" | "es", Content> = {
                 image: "/projects/lightning-tips.webp"
             },
             {
-                title: "Personal Portfolio v2",
-                description: "A high-performance portfolio featuring smooth parallax effects, glassmorphism UI, and dark mode support, built with modern web standards.",
-                tags: ["React", "Framer Motion", "Shadcn"],
+                title: "Personal Finance App",
+                description: "A personal finance tracker with n8n-powered automations for expense categorization and alerts, featuring multi-language support and customizable themes.",
+                tags: ["Next.js", "Supabase", "n8n", "Tailwind"],
                 link: "#",
-                image: "/projects/portfolio.webp"
+                image: "/projects/finance-app.webp"
+            },
+            {
+                title: "AhorroCR",
+                description: "A price comparison tool for Costa Rica that lets users find the best deals across supermarkets and drugstores, helping families save on everyday purchases.",
+                tags: ["Next.js", "Supabase", "TypeScript"],
+                link: "#",
+                image: "/projects/ahorro-cr.webp"
             }
         ]
     },
@@ -157,6 +170,12 @@ export const contentData: Record<"en" | "es", Content> = {
             { name: "GraphQL", category: "API" },
             { name: "Git", category: "Herramientas" },
             { name: "Docker", category: "Infraestructura" },
+            { name: "LXC", category: "Infraestructura" },
+            { name: "Máquinas Virtuales", category: "Infraestructura" },
+            { name: "Supabase", category: "Backend" },
+            { name: "n8n", category: "Automatización" },
+            { name: "Claude Code", category: "Herramientas IA" },
+            { name: "Desarrollo Agéntico", category: "Herramientas IA" },
         ],
         projectsList: [
             {
@@ -174,11 +193,18 @@ export const contentData: Record<"en" | "es", Content> = {
                 image: "/projects/lightning-tips.webp"
             },
             {
-                title: "Portafolio Personal v2",
-                description: "Un portafolio de alto rendimiento con efectos de paralaje suaves, UI de glassmorphism y soporte para modo oscuro, construido con estándares web modernos.",
-                tags: ["React", "Framer Motion", "Shadcn"],
+                title: "App de Finanzas Personales",
+                description: "Rastreador de finanzas personales con automatizaciones en n8n para categorización de gastos y alertas, con soporte multiidioma y temas personalizables.",
+                tags: ["Next.js", "Supabase", "n8n", "Tailwind"],
                 link: "#",
-                image: "/projects/portfolio.webp"
+                image: "/projects/finance-app.webp"
+            },
+            {
+                title: "AhorroCR",
+                description: "Herramienta de comparación de precios en Costa Rica para encontrar las mejores ofertas en supermercados y farmacias, ayudando a las familias a ahorrar en compras del día a día.",
+                tags: ["Next.js", "Supabase", "TypeScript"],
+                link: "#",
+                image: "/projects/ahorro-cr.webp"
             }
         ]
     }
