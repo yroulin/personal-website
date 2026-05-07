@@ -56,7 +56,7 @@ export const contentData: Record<"en" | "es", Content> = {
         talkDesc: "Always open to new opportunities and open source collaborations.",
         tipTitle: "Support my work",
         tipDesc: "Scan the QR code to send a Lightning tip.",
-        footer: "Built with Love ❤️",
+        footer: "",
         lightningAddress: "yroulin@strike.me",
         interestList: [
             { name: "Gaming", icon: "gaming" },

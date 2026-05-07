@@ -1,27 +1,26 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const outfit = Outfit({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-bricolage",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Yves Roulin | Front End Developer & AEM Specialist",
-  description: "Personal portfolio of Yves Roulin, specializing in modern web development and AEM.",
+  title: "Yves Roulin — Front End Developer",
+  description:
+    "Front End Developer and AEM Specialist. Building scalable interfaces with precision and care.",
 };
-
-import { ThemeProvider } from "@/components/theme-provider";
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} font-sans antialiased`}>
+      <body className={`${bricolage.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -30,7 +29,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
-      </body>
+
+</body>
     </html>
   );
 }
