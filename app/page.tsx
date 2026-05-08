@@ -3,18 +3,21 @@
 import {
   useState,
   useEffect,
-  useRef,
+  useSyncExternalStore,
   createContext,
   useContext,
   ReactNode,
 } from "react";
 import { useTheme } from "next-themes";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Linkedin, Sun, Moon, Languages, Pause, Play } from "lucide-react";
 import { contentData } from "@/lib/data";
 import ParticlesComponent from "@/components/ui/particles-bg";
 
 const MotionCtx = createContext(false);
+const subscribeToHydration = () => () => {};
+const getHydratedSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 function RevealDiv({
   children,
@@ -25,16 +28,19 @@ function RevealDiv({
   delay?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduced = useContext(MotionCtx);
+
+  if (reduced) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
-      ref={ref}
       className={className}
-      animate={reduced || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      transition={reduced ? { duration: 0 } : { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
@@ -50,16 +56,19 @@ function RevealLi({
   delay?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLLIElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduced = useContext(MotionCtx);
+
+  if (reduced) {
+    return <li className={className}>{children}</li>;
+  }
 
   return (
     <motion.li
-      ref={ref}
       className={className}
-      animate={reduced || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      transition={reduced ? { duration: 0 } : { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.li>
@@ -67,9 +76,16 @@ function RevealLi({
 }
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerSnapshot,
+  );
   const [lang, setLang] = useState<"en" | "es">("en");
-  const [motionOff, setMotionOff] = useState(false);
+  const [motionOff, setMotionOff] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
   const { theme, setTheme } = useTheme();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -79,9 +95,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setMounted(true);
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setMotionOff(mq.matches);
     const handler = (e: MediaQueryListEvent) => setMotionOff(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
@@ -92,7 +106,7 @@ export default function Home() {
 
   return (
     <MotionCtx.Provider value={motionOff}>
-      <ParticlesComponent />
+      <ParticlesComponent paused={motionOff} />
       {!motionOff && (
         <motion.div
           className="scroll-progress"

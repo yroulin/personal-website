@@ -2,21 +2,33 @@
 
 import { useEffect, useCallback } from "react";
 
-export default function ParticlesComponent() {
-  const initParticles = useCallback(() => {
+type ParticlesWindow = Window &
+  typeof globalThis & {
+    particlesJS?: (id: string, config: unknown) => void;
+    pJSDom?: Array<{ pJS: { fn: { vendors: { destroypJS: () => void } } } }>;
+  };
+
+export default function ParticlesComponent({ paused = false }: { paused?: boolean }) {
+  const destroyParticles = useCallback(() => {
     const oldCanvas = document.querySelector("#particles-js canvas");
     if (oldCanvas) oldCanvas.remove();
 
-    // @ts-ignore
-    if (window.pJSDom?.length > 0) {
-      // @ts-ignore
-      window.pJSDom.forEach((p) => p.pJS.fn.vendors.destroypJS());
-      // @ts-ignore
-      window.pJSDom = [];
+    const particlesWindow = window as ParticlesWindow;
+    if (particlesWindow.pJSDom?.length) {
+      particlesWindow.pJSDom.forEach((particle) => {
+        particle.pJS.fn.vendors.destroypJS();
+      });
+      particlesWindow.pJSDom = [];
     }
+  }, []);
 
-    // @ts-ignore
-    window.particlesJS("particles-js", {
+  const initParticles = useCallback(() => {
+    destroyParticles();
+
+    const particlesWindow = window as ParticlesWindow;
+    if (!particlesWindow.particlesJS) return;
+
+    particlesWindow.particlesJS("particles-js", {
       particles: {
         number: { value: 60, density: { enable: true, value_area: 800 } },
         color: { value: "#ffffff" },
@@ -54,10 +66,14 @@ export default function ParticlesComponent() {
       },
       retina_detect: true,
     });
-  }, []);
+  }, [destroyParticles]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (paused) {
+      destroyParticles();
+      return;
+    }
 
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js";
@@ -67,9 +83,10 @@ export default function ParticlesComponent() {
     script.onload = () => initParticles();
 
     return () => {
+      destroyParticles();
       if (document.body.contains(script)) document.body.removeChild(script);
     };
-  }, [initParticles]);
+  }, [destroyParticles, initParticles, paused]);
 
   return (
     <div
