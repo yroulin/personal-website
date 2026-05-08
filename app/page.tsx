@@ -29,21 +29,12 @@ function RevealDiv({
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduced = useContext(MotionCtx);
 
-  if (reduced) {
-    return (
-      <div ref={ref} className={className}>
-        {children}
-      </div>
-    );
-  }
-
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      animate={reduced || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={reduced ? { duration: 0 } : { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
@@ -63,21 +54,12 @@ function RevealLi({
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const reduced = useContext(MotionCtx);
 
-  if (reduced) {
-    return (
-      <li ref={ref} className={className}>
-        {children}
-      </li>
-    );
-  }
-
   return (
     <motion.li
       ref={ref}
       className={className}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      animate={reduced || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={reduced ? { duration: 0 } : { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.li>
