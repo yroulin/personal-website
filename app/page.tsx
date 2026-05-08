@@ -12,7 +12,6 @@ import { useTheme } from "next-themes";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import { Linkedin, Sun, Moon, Languages, Pause, Play } from "lucide-react";
 import { contentData } from "@/lib/data";
-import { ShuffleCards } from "@/components/ui/testimonial-cards";
 import ParticlesComponent from "@/components/ui/particles-bg";
 
 const MotionCtx = createContext(false);
@@ -284,19 +283,6 @@ export default function Home() {
               ))}
             </ol>
           </section>
-
-          {/* Testimonials */}
-          {/* <section className="section" aria-labelledby="testimonials-heading">
-            <RevealDiv>
-              <p className="section-marker" aria-hidden="true">
-                05
-              </p>
-              <h2 id="testimonials-heading" className="section-heading">
-                {lang === "en" ? "What people say" : "Lo que dicen"}
-              </h2>
-            </RevealDiv>
-            <ShuffleCards />
-          </section> */}
 
           {/* Contact */}
           <section className="section" aria-labelledby="contact-heading">
