@@ -224,6 +224,10 @@
   background: var(--bg-2);
 }
 
+a.nav-toggle {
+  text-decoration: none;
+}
+
 .nav-toggle[aria-pressed="true"] {
   color: var(--amber);
 }

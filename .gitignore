@@ -44,3 +44,9 @@ next-env.d.ts
 /agent-os
 /docs
 /AGENTS.md
+
+# Local AI tooling and skills
+/.agents/
+/.claude/
+/.impeccable/
+/skills-lock.json
